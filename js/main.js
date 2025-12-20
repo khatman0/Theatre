@@ -1,6 +1,6 @@
-/* باز شدن آروم صفحه */
-<script>
-    window.addEventListener('DOMContentLoaded', () => {
+// وقتی DOM کاملاً لود شد، کلاس 'loaded' اضافه می‌کنیم
+window.addEventListener('DOMContentLoaded', () => {
+    setTimeout(() => {
         document.body.classList.add('loaded');
-    });
-</script>
+    }, 50); // یک تاخیر کوتاه برای اطمینان از بارگذاری کامل
+});
