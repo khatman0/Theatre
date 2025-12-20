@@ -69,6 +69,7 @@ nav a:hover {
     inset: 0;
     z-index: 9999;
     pointer-events: none;
+    overflow: hidden;
 }
 
 .curtain-left,
@@ -77,35 +78,40 @@ nav a:hover {
     top: 0;
     width: 50%;
     height: 100%;
-    background: linear-gradient(
+    background: repeating-linear-gradient(
         to bottom,
-        #7a0000,
-        #4a0000,
-        #2a0000
-    );
+        #7a0000 0px,
+        #7a0000 4px,
+        #6a0000 5px,
+        #6a0000 9px
+    ); /* چین‌های افقی ملایم */
+    box-shadow: inset 5px 0 30px rgba(0,0,0,0.5),
+                inset -5px 0 30px rgba(0,0,0,0.3);
 }
 
-/* چین‌خوردگی پرده */
+/* Left Curtain */
 .curtain-left {
     left: 0;
-    box-shadow: inset -20px 0 40px rgba(0,0,0,0.6);
-    animation: openLeft 2.2s ease-in-out forwards;
+    transform-origin: left center;
+    transform: skewX(-3deg);
+    animation: openLeft 2.2s ease-in-out forwards 0.5s;
 }
 
+/* Right Curtain */
 .curtain-right {
     right: 0;
-    box-shadow: inset 20px 0 40px rgba(0,0,0,0.6);
-    animation: openRight 2.2s ease-in-out forwards;
+    transform-origin: right center;
+    transform: skewX(3deg);
+    animation: openRight 2.2s ease-in-out forwards 0.5s;
 }
 
 /* انیمیشن باز شدن */
 @keyframes openLeft {
     0% { width: 50%; }
-    100% { width: 7%; }
+    100% { width: 5%; }
 }
 
 @keyframes openRight {
     0% { width: 50%; }
-    100% { width: 7%; }
+    100% { width: 5%; }
 }
-
