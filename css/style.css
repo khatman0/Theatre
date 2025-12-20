@@ -100,6 +100,29 @@ nav a:hover {
 }
 
 /* صفجه اعضا */
+.member-card {
+    background-color: #1b1b1b;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+    font-family: 'Vazirmatn', sans-serif; /* اطمینان از فونت درست */
+}
+
+.member-card h3 {
+    font-size: 1.2rem;
+    font-weight: 500; /* مثل h3 صفحات دیگر */
+    color: #c9a14a;
+    margin-bottom: 8px;
+}
+
+.member-card p {
+    font-size: 1rem;
+    font-weight: 300; /* سبک مثل متن بدن سایت */
+    color: #ccc;
+    line-height: 1.6;
+}
+
 .members-page {
     padding: 80px 8%;
 }
