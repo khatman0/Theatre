@@ -98,3 +98,52 @@ nav a:hover {
     line-height: 1.8;
     color: #ccc;
 }
+
+/* صفجه اعضا */
+.members-page {
+    padding: 80px 8%;
+}
+
+.members-intro {
+    text-align: center;
+    margin-bottom: 50px;
+}
+
+.members-intro h1 {
+    font-size: 2.5rem;
+    color: #c9a14a;
+    margin-bottom: 15px;
+}
+
+.members-intro p {
+    color: #ddd;
+    font-size: 1.1rem;
+}
+
+.members-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+    gap: 20px;
+}
+
+.member-card {
+    background-color: #1b1b1b;
+    padding: 20px;
+    border-radius: 15px;
+    text-align: center;
+    transition: transform 0.3s, box-shadow 0.3s;
+}
+
+.member-card h3 {
+    color: #c9a14a;
+    margin-bottom: 8px;
+}
+
+.member-card p {
+    color: #ccc;
+}
+
+.member-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
+}
