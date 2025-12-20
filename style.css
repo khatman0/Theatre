@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;500;700&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Vazirmatn', sans-serif;
+}
+
+body {
+    background-color: #0f0f0f;
+    color: #eaeaea;
+}
+
+/* منو */
+.navbar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px 8%;
+    background-color: #111;
+}
+
+.logo {
+    font-weight: 700;
+    font-size: 1.1rem;
+}
+
+nav a {
+    margin-right: 20px;
+    text-decoration: none;
+    color: #eaeaea;
+    font-size: 0.95rem;
+}
+
+nav a:hover {
+    color: #c9a14a;
+}
+
+/* بخش اصلی */
+.hero {
+    padding: 120px 8% 80px;
+}
+
+.hero h1 {
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    color: #c9a14a;
+}
+
+.hero p {
+    max-width: 600px;
+    line-height: 2;
+    color: #ccc;
+}
+
+.intro {
+    padding: 60px 8%;
+}
+
+.intro h2 {
+    margin-bottom: 15px;
+    color: #c9a14a;
+}
