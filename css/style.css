@@ -149,28 +149,6 @@ nav a:hover {
     gap: 20px;
 }
 
-.member-card {
-    background-color: #1b1b1b;
-    padding: 20px;
-    border-radius: 15px;
-    text-align: center;
-    transition: transform 0.3s, box-shadow 0.3s;
-}
-
-.member-card h3 {
-    color: #c9a14a;
-    margin-bottom: 8px;
-}
-
-.member-card p {
-    color: #ccc;
-}
-
-.member-card:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 8px 20px rgba(0,0,0,0.6);
-}
-
 /* اجراها */
 .shows-page {
     padding: 80px 8%;
