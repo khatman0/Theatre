@@ -62,3 +62,50 @@ nav a:hover {
     margin-bottom: 15px;
     color: #c9a14a;
 }
+
+/* پرده تئاتر */
+.curtain {
+    position: fixed;
+    inset: 0;
+    z-index: 9999;
+    pointer-events: none;
+}
+
+.curtain-left,
+.curtain-right {
+    position: absolute;
+    top: 0;
+    width: 50%;
+    height: 100%;
+    background: linear-gradient(
+        to bottom,
+        #7a0000,
+        #4a0000,
+        #2a0000
+    );
+}
+
+/* چین‌خوردگی پرده */
+.curtain-left {
+    left: 0;
+    box-shadow: inset -20px 0 40px rgba(0,0,0,0.6);
+    animation: openLeft 2.2s ease-in-out forwards;
+}
+
+.curtain-right {
+    right: 0;
+    box-shadow: inset 20px 0 40px rgba(0,0,0,0.6);
+    animation: openRight 2.2s ease-in-out forwards;
+}
+
+/* انیمیشن باز شدن */
+@keyframes openLeft {
+    0% { width: 50%; }
+    100% { width: 7%; }
+}
+
+@keyframes openRight {
+    0% { width: 50%; }
+    100% { width: 7%; }
+}
+
