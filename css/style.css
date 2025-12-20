@@ -63,59 +63,6 @@ nav a:hover {
     color: #c9a14a;
 }
 
-/* پرده تئاتر */
-.curtain {
-    position: fixed;
-    inset: 0;
-    z-index: 9999;
-    pointer-events: none;
-    overflow: hidden;
-}
-
-.curtain-left,
-.curtain-right {
-    position: absolute;
-    top: 0;
-    width: 50%;
-    height: 100%;
-    background: repeating-linear-gradient(
-        to bottom,
-        #7a0000 0px,
-        #7a0000 4px,
-        #6a0000 5px,
-        #6a0000 9px
-    ); /* چین‌های افقی ملایم */
-    box-shadow: inset 5px 0 30px rgba(0,0,0,0.5),
-                inset -5px 0 30px rgba(0,0,0,0.3);
-}
-
-/* Left Curtain */
-.curtain-left {
-    left: 0;
-    transform-origin: left center;
-    transform: skewX(-3deg);
-    animation: openLeft 2.2s ease-in-out forwards 0.5s;
-}
-
-/* Right Curtain */
-.curtain-right {
-    right: 0;
-    transform-origin: right center;
-    transform: skewX(3deg);
-    animation: openRight 2.2s ease-in-out forwards 0.5s;
-}
-
-/* انیمیشن باز شدن */
-@keyframes openLeft {
-    0% { width: 50%; }
-    100% { width: 5%; }
-}
-
-@keyframes openRight {
-    0% { width: 50%; }
-    100% { width: 5%; }
-}
-
 /* درباره ما */
 .intro {
     padding: 100px 8% 60px;
