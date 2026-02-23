@@ -11,8 +11,6 @@ body {
     background-color: #0f0f0f;
     color: #eaeaea;
     font-family: 'Vazirmatn', sans-serif;
-    opacity: 0;
-    transition: opacity 0.8s ease-in-out;
 }
 
 body.loaded {
