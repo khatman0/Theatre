@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>تماس با ما | کانون تئاتر دانشگاه نیشابور</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@300;400;500;700;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="theme.css">
+</head>
+<body>
+
+<div class="curtain-overlay" id="curtainOverlay">
+  <div class="curtain-panel left"><div class="curtain-tassel"></div></div>
+  <div class="curtain-panel right"><div class="curtain-tassel"></div></div>
+</div>
+<div class="stage-curtain-l"></div>
+<div class="stage-curtain-r"></div>
+<div class="spotlight-bg"></div>
+
+<nav id="navbar">
+  <a href="index.html" class="nav-logo">
+    <div class="nav-logo-icon">ت</div>
+    <div>
+      <div class="nav-logo-text">کانون تئاتر</div>
+      <div class="nav-logo-sub">دانشگاه نیشابور</div>
+    </div>
+  </a>
+  <ul class="nav-links">
+    <li><a href="about.html" class="">درباره ما</a></li>
+    <li><a href="shows.html" class="">نمایش‌ها</a></li>
+    <li><a href="gallery.html" class="">گالری</a></li>
+    <li><a href="team.html" class="">اعضا</a></li>
+    <li><a href="news.html" class="">اخبار</a></li>
+    <li><a href="contact.html" class="nav-cta">تماس</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="منو">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <a href="about.html">درباره ما</a>
+  <a href="shows.html">نمایش‌ها</a>
+  <a href="gallery.html">گالری</a>
+  <a href="team.html">اعضا</a>
+  <a href="news.html">اخبار</a>
+  <a href="contact.html">تماس با ما</a>
+</div>
+
+<header class="page-header">
+  <div class="page-header-bg"></div>
+  <div class="page-header-lines"></div>
+  <div class="page-header-content">
+    <span class="page-tag">در تماس باشید</span>
+    <h1 class="page-title">پرده پایانی:<br><span>تماس</span> با کانون</h1>
+    <p class="page-subtitle">از شنیدن ایده‌ها و نظرات شما خوشحال می‌شویم</p>
+  </div>
+</header>
+
+<section style="background:var(--black);">
+  <div class="container">
+    <div class="contact-grid">
+      <div class="contact-info reveal">
+        <p class="contact-intro">برای عضویت، همکاری، یا هرگونه سوال، با ما در ارتباط باشید.</p>
+        <div class="contact-item"><div class="contact-icon">📍</div><div><div class="contact-item-label">آدرس</div><div class="contact-item-val">نیشابور، دانشگاه نیشابور، ساختمان فرهنگی، اتاق ۲۰۵</div></div></div>
+        <div class="contact-item"><div class="contact-icon">📞</div><div><div class="contact-item-label">تلفن تماس</div><div class="contact-item-val" style="direction:ltr; text-align:right;">۰۵۱-۴۲۶۱-۱۰۰۰</div></div></div>
+        <div class="contact-item"><div class="contact-icon">✉️</div><div><div class="contact-item-label">ایمیل</div><div class="contact-item-val" style="direction:ltr; text-align:right;">theater@neyshabur.ac.ir</div></div></div>
+        <div class="contact-item"><div class="contact-icon">🕐</div><div><div class="contact-item-label">ساعات حضور</div><div class="contact-item-val">شنبه تا چهارشنبه، ۱۴:۰۰ تا ۱۸:۰۰</div></div></div>
+        <div class="social-links">
+          <a class="social-btn" href="#" title="اینستاگرام">📸</a>
+          <a class="social-btn" href="#" title="تلگرام">✈️</a>
+          <a class="social-btn" href="#" title="آپارات">🎬</a>
+          <a class="social-btn" href="#" title="توییتر">🐦</a>
+        </div>
+      </div>
+      <div class="contact-form reveal" style="transition-delay:0.2s;">
+        <div class="form-row">
+          <div class="form-group"><label>نام و نام خانوادگی</label><input type="text" placeholder="مثال: علی محمدی"></div>
+          <div class="form-group"><label>شماره دانشجویی</label><input type="text" placeholder="اختیاری"></div>
+        </div>
+        <div class="form-group"><label>ایمیل</label><input type="email" placeholder="your@email.com" style="direction:ltr;"></div>
+        <div class="form-group">
+          <label>موضوع</label>
+          <select>
+            <option value="">انتخاب کنید...</option>
+            <option>عضویت در کانون</option><option>همکاری هنری</option><option>اطلاعات اجرا</option><option>پیشنهاد نمایشنامه</option><option>سایر</option>
+          </select>
+        </div>
+        <div class="form-group"><label>پیام شما</label><textarea placeholder="پیام خود را اینجا بنویسید..."></textarea></div>
+        <button class="form-submit" onclick="handleSubmit(this)">ارسال پیام ✉️</button>
+      </div>
+    </div>
+    <div class="map-box reveal">
+      <div style="font-size:2rem;">📍</div>
+      <div>نیشابور، دانشگاه نیشابور، ساختمان فرهنگی</div>
+    </div>
+  </div>
+</section>
+<script>
+  function handleSubmit(btn) {
+    btn.textContent = '✅ پیام شما ارسال شد!';
+    btn.style.background = '#1a7a3f';
+    btn.disabled = true;
+    setTimeout(() => { btn.textContent = 'ارسال پیام ✉️'; btn.style.background = ''; btn.disabled = false; }, 4000);
+  }
+</script>
+
+<footer>
+  <div class="footer-grid">
+    <div class="footer-brand">
+      <div class="footer-logo">🎭 کانون تئاتر <span class="dot">•</span> نیشابور</div>
+      <p class="footer-desc">کانون تئاتر دانشگاه نیشابور، پایگاهی برای هنرمندان جوان و علاقه‌مندان به هنرهای نمایشی. از سال ۱۳۸۵ در خدمت هنر و فرهنگ.</p>
+    </div>
+    <div>
+      <div class="footer-heading">دسترسی سریع</div>
+      <ul class="footer-links">
+        <li><a href="about.html">درباره ما</a></li>
+        <li><a href="shows.html">نمایش‌ها</a></li>
+        <li><a href="gallery.html">گالری</a></li>
+        <li><a href="team.html">اعضا</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">خدمات</div>
+      <ul class="footer-links">
+        <li><a href="#">کارگاه‌های آموزشی</a></li>
+        <li><a href="#">بازیگری</a></li>
+        <li><a href="#">کارگردانی</a></li>
+        <li><a href="#">طراحی صحنه</a></li>
+      </ul>
+    </div>
+    <div>
+      <div class="footer-heading">تماس</div>
+      <ul class="footer-links">
+        <li><a href="#">اینستاگرام</a></li>
+        <li><a href="#">تلگرام</a></li>
+        <li><a href="#">آپارات</a></li>
+        <li><a href="contact.html">فرم تماس</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <span class="footer-copy">© ۱۴۰۳ کانون تئاتر دانشگاه نیشابور — تمامی حقوق محفوظ است</span>
+    <span class="footer-copy">ساخته شده با <span class="footer-heart">❤</span> برای هنر</span>
+  </div>
+</footer>
+
+<script src="theme.js"></script>
+</body>
+</html>
