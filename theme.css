@@ -45,56 +45,101 @@ body {
   pointer-events: none;
 }
 .curtain-panel {
-  position: absolute; top: -2%; height: 104%;
+  position: absolute; top: -2%; height: 104%; width: 52vw;
   background:
-    repeating-linear-gradient(90deg,
-      rgba(0,0,0,0.32) 0px, rgba(0,0,0,0.32) 14px,
-      var(--velvet-1) 14px, var(--velvet-1) 42px,
-      var(--velvet-2) 42px, var(--velvet-2) 56px),
-    linear-gradient(180deg, #4a000d 0%, var(--crimson) 30%, var(--velvet-2) 100%);
-  box-shadow: 0 0 60px 10px rgba(0,0,0,0.6) inset;
-  transition: width 2.1s cubic-bezier(.77,0,.18,1), box-shadow 2.1s ease;
+    repeating-radial-gradient(ellipse 60% 50% at 18% 0%,
+      var(--crimson-glow) 0%, var(--velvet-1) 7%,
+      var(--velvet-2) 13%, var(--crimson) 19%),
+    linear-gradient(180deg, #6e0014 0%, var(--crimson) 25%, var(--velvet-2) 100%);
+  background-size: 70px 100%, 100% 100%;
+  background-repeat: repeat-x, no-repeat;
+  box-shadow: 0 0 80px 16px rgba(0,0,0,0.65) inset;
+  transition: clip-path 2.4s cubic-bezier(.65,0,.2,1), filter 2.4s ease;
+  filter: drop-shadow(0 0 30px rgba(0,0,0,0.5));
 }
 .curtain-panel::after {
   content: '';
   position: absolute; inset: 0;
-  background: radial-gradient(ellipse 80% 30% at 50% 0%, rgba(0,0,0,0.55), transparent 60%),
-              radial-gradient(ellipse 80% 30% at 50% 100%, rgba(0,0,0,0.55), transparent 60%);
+  background: radial-gradient(ellipse 90% 22% at 50% 0%, rgba(0,0,0,0.6), transparent 65%),
+              radial-gradient(ellipse 90% 30% at 50% 100%, rgba(0,0,0,0.55), transparent 65%);
 }
-.curtain-panel.left  { left: 0; width: 50vw; border-left: 3px solid var(--gold); }
-.curtain-panel.right { right: 0; width: 50vw; border-right: 3px solid var(--gold); }
-.curtain-overlay.open .curtain-panel.left  { width: 92px; }
-.curtain-overlay.open .curtain-panel.right { width: 92px; }
-@media (max-width: 700px) {
-  .curtain-overlay.open .curtain-panel.left  { width: 34px; }
-  .curtain-overlay.open .curtain-panel.right { width: 34px; }
+/* حالت بسته: پرده کامل وسط صحنه را پوشانده */
+.curtain-panel.left {
+  left: 0;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+.curtain-panel.right {
+  right: 0;
+  clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+}
+/* حالت باز: پرده از وسط جمع و به سمت لبه‌ی صفحه با حالت چین‌خورده (festoon) کشیده می‌شود */
+.curtain-overlay.open .curtain-panel.left {
+  clip-path: polygon(
+    0% 0%, 30% 0%,
+    10% 10%, 26% 22%, 9% 34%, 24% 46%,
+    8% 58%, 22% 70%, 7% 84%, 16% 100%,
+    0% 100%
+  );
+}
+.curtain-overlay.open .curtain-panel.right {
+  clip-path: polygon(
+    100% 0%, 70% 0%,
+    90% 10%, 74% 22%, 91% 34%, 76% 46%,
+    92% 58%, 78% 70%, 93% 84%, 84% 100%,
+    100% 100%
+  );
+}
+.curtain-overlay.open .curtain-panel {
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.6));
 }
 .curtain-tassel {
-  position: absolute; bottom: 18px; left: 50%; transform: translateX(-50%);
-  width: 26px; height: 26px; border-radius: 50%;
+  position: absolute; top: 38%; left: 18%; transform: translate(-50%,-50%);
+  width: 22px; height: 22px; border-radius: 50%;
   background: radial-gradient(circle at 35% 30%, var(--gold-light), var(--gold) 60%, #8a6c20 100%);
   box-shadow: 0 0 12px rgba(201,168,76,0.5);
+  opacity: 0; transition: opacity 1s ease 1.6s, left 2.4s cubic-bezier(.65,0,.2,1);
 }
+.curtain-panel.right .curtain-tassel { left: 82%; }
+.curtain-overlay.open .curtain-tassel { opacity: 1; left: 8%; }
+.curtain-overlay.open .curtain-panel.right .curtain-tassel { left: 92%; }
 
 /* ───────────────────────────────────────────
    پرده‌های تزئینی ثابت کناری (بعد از باز شدن می‌مانند)
    ─────────────────────────────────────────── */
 .stage-frame { position: relative; }
 .stage-curtain-l, .stage-curtain-r {
-  position: fixed; top: 0; bottom: 0; width: 92px; z-index: 40;
+  position: fixed; top: -2%; height: 104%; width: 130px; z-index: 40;
   pointer-events: none;
   background:
-    repeating-linear-gradient(90deg,
-      rgba(0,0,0,0.3) 0px, rgba(0,0,0,0.3) 12px,
-      var(--velvet-1) 12px, var(--velvet-1) 36px,
-      var(--velvet-2) 36px, var(--velvet-2) 48px),
-    linear-gradient(180deg, #4a000d 0%, var(--crimson) 30%, var(--velvet-2) 100%);
-  box-shadow: 0 0 40px 6px rgba(0,0,0,0.5) inset;
+    repeating-radial-gradient(ellipse 60% 50% at 18% 0%,
+      var(--crimson-glow) 0%, var(--velvet-1) 7%,
+      var(--velvet-2) 13%, var(--crimson) 19%),
+    linear-gradient(180deg, #6e0014 0%, var(--crimson) 25%, var(--velvet-2) 100%);
+  background-size: 70px 100%, 100% 100%;
+  background-repeat: repeat-x, no-repeat;
+  box-shadow: 0 0 60px 12px rgba(0,0,0,0.6) inset;
+  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.6));
 }
-.stage-curtain-l { left: 0; border-left: 3px solid var(--gold); }
-.stage-curtain-r { right: 0; border-right: 3px solid var(--gold); }
+.stage-curtain-l {
+  left: 0;
+  clip-path: polygon(
+    0% 0%, 36% 0%,
+    14% 10%, 32% 22%, 12% 34%, 30% 46%,
+    11% 58%, 28% 70%, 10% 84%, 20% 100%,
+    0% 100%
+  );
+}
+.stage-curtain-r {
+  right: 0;
+  clip-path: polygon(
+    100% 0%, 64% 0%,
+    86% 10%, 68% 22%, 88% 34%, 70% 46%,
+    89% 58%, 72% 70%, 90% 84%, 80% 100%,
+    100% 100%
+  );
+}
 @media (max-width: 700px) {
-  .stage-curtain-l, .stage-curtain-r { width: 34px; }
+  .stage-curtain-l, .stage-curtain-r { width: 56px; }
 }
 
 /* ───────────────────────────────────────────
@@ -111,7 +156,7 @@ body {
    NAV
    ─────────────────────────────────────────── */
 nav {
-  position: fixed; top: 0; right: 92px; left: 92px; z-index: 100;
+  position: fixed; top: 0; right: 130px; left: 130px; z-index: 100;
   display: flex; align-items: center; justify-content: space-between;
   padding: 0 3rem; height: 70px;
   background: rgba(10,10,10,0.92);
@@ -120,7 +165,7 @@ nav {
   transition: all 0.3s;
 }
 nav.scrolled { height: 58px; background: rgba(10,10,10,0.98); }
-@media (max-width: 700px) { nav { right: 34px; left: 34px; } }
+@media (max-width: 700px) { nav { right: 56px; left: 56px; } }
 
 .nav-logo { display: flex; align-items: center; gap: 12px; text-decoration: none; }
 .nav-logo-icon {
@@ -227,8 +272,8 @@ section { padding: 90px 2rem; }
 /* ───────────────────────────────────────────
    FOOTER
    ─────────────────────────────────────────── */
-footer { background: var(--dark); border-top: 1px solid var(--border); padding: 60px 92px 30px; }
-@media (max-width: 700px) { footer { padding: 60px 34px 30px; } }
+footer { background: var(--dark); border-top: 1px solid var(--border); padding: 60px 130px 30px; }
+@media (max-width: 700px) { footer { padding: 60px 56px 30px; } }
 .footer-grid { display: grid; grid-template-columns: 2fr 1fr 1fr 1fr; gap: 48px; max-width: 1200px; margin: 0 auto 40px; }
 .footer-logo { font-size: 1.2rem; font-weight: 900; color: #fff; margin-bottom: 12px; display: flex; align-items: center; gap: 10px; }
 .footer-logo .dot { color: var(--crimson); }
