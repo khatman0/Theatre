@@ -193,6 +193,24 @@
     font-size:.96rem;
     text-align:center;
   }
+  .state-msg{
+    display:flex;align-items:center;justify-content:center;gap:.6rem;
+    border:1px dashed var(--line);
+    padding:1.8rem 1.3rem;
+    color:var(--fg-soft);
+    font-size:.96rem;
+  }
+  .state-msg .dot{
+    width:.55rem;height:.55rem;border-radius:50%;
+    background:var(--accent);flex:none;
+    animation:pulse 1s ease-in-out infinite;
+  }
+  @keyframes pulse{
+    0%,100%{opacity:.35;transform:scale(.85)}
+    50%{opacity:1;transform:scale(1)}
+  }
+  .state-msg.is-error{border-color:#C0524A;color:#C0524A}
+  .state-msg.is-error .dot{display:none}
 
   footer{
     border-top:1px solid var(--line);
@@ -201,7 +219,7 @@
   }
   :focus-visible{outline:3px solid var(--turquoise);outline-offset:2px}
   @media (prefers-reduced-motion: reduce){
-    .burger span,#menu,.backdrop{transition:none}
+    .burger span,#menu,.backdrop,.state-msg .dot{transition:none;animation:none}
   }
 </style>
 </head>
@@ -237,22 +255,11 @@
 
 <main class="wrap">
   <section>
-    <div class="play-list">
-
-      <article class="play-card">
-        <h2>فیروزه‌ی ترم اول</h2>
-        <ul class="meta">
-          <li>نمایشنامه‌ی کوتاه طنز</li>
-          <li>۵ صحنه</li>
-          <li>۴ بازیگر (۲ مرد، ۲ زن)</li>
-          <li>حدود ۳۰ دقیقه</li>
-        </ul>
-        <p>داستان یک روزِ سعید، دانشجوی تازه‌واردِ کاشمری مهندسی کامپیوتر، در اولین روزهاش در دانشگاه نیشابور؛ بین فرم‌های امضا‌نشده، یک سنواتیِ افسانه‌ای، و یک هم‌کلاسیِ بومیِ خسته از شنیدن «آها، شهر خیام!».</p>
-        <a class="cta" href="https://claude.ai/artifact/G8LgxLx4HRDKFihrGZjchM" target="_blank" rel="noopener">خواندن متن کامل ←</a>
-      </article>
-
-      <p class="empty">نمایشنامه‌ی بعدی، در دست نوشتن است.</p>
-
+    <div class="play-list" id="playList">
+      <div class="state-msg" id="stateMsg">
+        <span class="dot" aria-hidden="true"></span>
+        <span>در حال بارگذاری نمایشنامه‌ها…</span>
+      </div>
     </div>
   </section>
 </main>
@@ -278,6 +285,81 @@
     document.addEventListener('keydown', function(e){
       if(e.key === 'Escape'){ setOpen(false); }
     });
+  })();
+
+  /* ---------- بارگذاری نمایشنامه‌ها از Supabase ----------
+     پیش از استفاده، سه مقدار زیر را با اطلاعات پروژه‌ی خودتان پر کنید.
+     SUPABASE_URL و SUPABASE_ANON_KEY را از Project Settings → API بردارید
+     (کلید anon/public را بگذارید، نه service_role را).
+  */
+  (function(){
+    var SUPABASE_URL = "https://giskluyvwinuyqlgdfuw.supabase.co";
+    var SUPABASE_ANON_KEY = "sb_publishable_rInivX8hSrSzWNEeMiMbsw_cNEyJxrh";
+    var TABLE_NAME = "plays";
+
+    var listEl = document.getElementById('playList');
+    var stateEl = document.getElementById('stateMsg');
+
+    function escapeHtml(str){
+      return String(str == null ? "" : str).replace(/[&<>"']/g, function(c){
+        return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+      });
+    }
+
+    function renderPlays(plays){
+      if(!plays || plays.length === 0){
+        stateEl.className = "empty";
+        stateEl.innerHTML = "نمایشنامه‌ی بعدی، در دست نوشتن است.";
+        return;
+      }
+      stateEl.remove();
+      plays.forEach(function(play){
+        var article = document.createElement('article');
+        article.className = "play-card";
+
+        var metaHtml = "";
+        if(Array.isArray(play.meta) && play.meta.length){
+          metaHtml = '<ul class="meta">' +
+            play.meta.map(function(m){ return '<li>' + escapeHtml(m) + '</li>'; }).join('') +
+            '</ul>';
+        }
+
+        var linkHtml = "";
+        if(play.link_url){
+          linkHtml = '<a class="cta" href="' + escapeHtml(play.link_url) +
+            '" target="_blank" rel="noopener">خواندن متن کامل ←</a>';
+        }
+
+        article.innerHTML =
+          '<h2>' + escapeHtml(play.title) + '</h2>' +
+          metaHtml +
+          '<p>' + escapeHtml(play.summary) + '</p>' +
+          linkHtml;
+
+        listEl.appendChild(article);
+      });
+    }
+
+    function showError(){
+      stateEl.className = "state-msg is-error";
+      stateEl.innerHTML = "<span>نمایشنامه‌ها لود نشدن. لطفاً بعداً دوباره امتحان کنید.</span>";
+    }
+
+    var endpoint = SUPABASE_URL + "/rest/v1/" + TABLE_NAME +
+      "?select=*&published=eq.true&order=sort_order.asc";
+
+    fetch(endpoint, {
+      headers: {
+        apikey: SUPABASE_ANON_KEY,
+        Authorization: "Bearer " + SUPABASE_ANON_KEY
+      }
+    })
+      .then(function(res){
+        if(!res.ok) throw new Error("bad response");
+        return res.json();
+      })
+      .then(renderPlays)
+      .catch(showError);
   })();
 </script>
 </body>
