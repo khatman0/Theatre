@@ -1,0 +1,431 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>نمایشنامه‌های شما — کانون تئاتر دانشگاه نیشابور</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lalezar&family=Vazirmatn:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --night:#0E1B24;--night-2:#162A35;--turquoise:#3FBFB6;--turquoise-deep:#1B7E79;
+    --ochre:#D9A62E;--paper:#F0ECE3;--ink:#1A242C;--ink-soft:#54636E;--rule:#D8D1C4;--content-w:46rem;
+    --bg:var(--paper);--fg:var(--ink);--fg-soft:var(--ink-soft);--panel:#FFFFFF;--line:var(--rule);
+    --accent:var(--turquoise-deep);--accent-2:#9C7413;
+    box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px);
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --bg:#111A21;--fg:#E7E2D7;--fg-soft:#9BA9B2;--panel:#17232B;--line:#2A3A44;
+      --accent:var(--turquoise);--accent-2:var(--ochre);
+    }
+  }
+  :root[data-theme="dark"]{
+    --bg:#111A21;--fg:#E7E2D7;--fg-soft:#9BA9B2;--panel:#17232B;--line:#2A3A44;
+    --accent:var(--turquoise);--accent-2:var(--ochre);
+  }
+  @media (min-width:60rem){ :root{--content-w:58rem} body{font-size:18px} header.hero{padding:3.4rem 0 3.4rem} }
+  @media (min-width:80rem){ :root{--content-w:68rem} }
+  *,*::before,*::after{box-sizing:inherit}
+  html{scroll-padding-top:calc(4.2rem + env(safe-area-inset-top,0px));-webkit-text-size-adjust:100%;height:100%}
+  body{margin:0;min-height:100%;background:var(--bg);color:var(--fg);font-family:Vazirmatn,"Segoe UI",Tahoma,sans-serif;font-size:17px;line-height:1.85}
+  a{color:inherit}
+  .wrap{max-width:var(--content-w);margin:0 auto;padding:0 1.25rem}
+  .topbar{position:sticky;top:0;z-index:40;padding-top:env(safe-area-inset-top,0px);background:var(--night);border-bottom:1px solid rgba(63,191,182,.35)}
+  .topbar-inner{max-width:var(--content-w);margin:0 auto;padding:0 1.1rem;height:3.6rem;display:flex;align-items:center;justify-content:space-between}
+  .brand{display:flex;align-items:center;gap:.55rem;text-decoration:none;color:#EAF4F3}
+  .brand .mark{width:1.9rem;height:1.9rem;border-radius:50%;background:radial-gradient(circle at 35% 30%, var(--turquoise), var(--turquoise-deep) 70%);flex:none;box-shadow:inset 0 0 0 2px rgba(255,255,255,.15)}
+  .brand span{font-family:Lalezar,sans-serif;font-size:1.25rem;line-height:1;letter-spacing:.01em}
+  .burger{appearance:none;border:0;background:transparent;width:2.6rem;height:2.6rem;border-radius:.5rem;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:5px;cursor:pointer}
+  .burger:hover{background:rgba(63,191,182,.12)}
+  .burger span{width:22px;height:2px;background:var(--turquoise);border-radius:2px;transition:transform .25s ease, opacity .2s ease}
+  .burger[aria-expanded="true"] span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .burger[aria-expanded="true"] span:nth-child(2){opacity:0}
+  .burger[aria-expanded="true"] span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+  .backdrop{position:fixed;top:calc(3.6rem + env(safe-area-inset-top,0px));left:0;right:0;bottom:0;background:rgba(0,0,0,.4);opacity:0;pointer-events:none;transition:opacity .25s ease;z-index:38}
+  .backdrop[data-open="true"]{opacity:1;pointer-events:auto}
+  #menu{position:fixed;top:calc(3.6rem + env(safe-area-inset-top,0px));bottom:0;left:0;width:min(78vw, 16rem);background:var(--night-2);border-left:1px solid rgba(63,191,182,.15);box-shadow:2px 0 18px rgba(0,0,0,.25);transform:translateX(-100%);transition:transform .28s ease;overflow-y:auto;z-index:39}
+  #menu[data-open="true"]{transform:translateX(0)}
+  #menu ul{list-style:none;margin:0;padding:.6rem 0}
+  #menu li a{display:block;padding:.9rem 1.1rem;color:#DCEFED;text-decoration:none;font-size:1.02rem;border-bottom:1px solid rgba(255,255,255,.06)}
+  #menu li:last-child a{border-bottom:none}
+  #menu li a[aria-current="page"]{color:var(--turquoise);font-weight:600}
+  #menu li a:hover{color:var(--turquoise)}
+  #menu li.menu-authed{display:none}
+  #menu li.menu-auth{border-top:1px solid rgba(63,191,182,.18);margin-top:.3rem}
+  #menu li.menu-auth .menu-user{padding:.85rem 1.1rem .2rem;color:var(--turquoise);font-size:.8rem;word-break:break-all}
+  #menu li.menu-auth a{color:#DCEFED;padding-top:.35rem}
+  header.hero{background:var(--night);color:#EAF4F3;padding:2.6rem 0 2.6rem;position:relative;overflow:hidden;border-bottom:6px solid var(--turquoise-deep)}
+  .tile{position:absolute;inset:0;background-image:linear-gradient(45deg, rgba(63,191,182,.10) 25%, transparent 25%, transparent 75%, rgba(63,191,182,.10) 75%),linear-gradient(45deg, rgba(217,166,46,.08) 25%, transparent 25%, transparent 75%, rgba(217,166,46,.08) 75%);background-size:72px 72px;background-position:0 0,36px 36px;opacity:.9}
+  .hero .wrap{position:relative}
+  .eyebrow{color:var(--ochre);font-size:.92rem;margin:0 0 .5rem}
+  h1{font-family:Lalezar,Vazirmatn,sans-serif;font-weight:400;font-size:clamp(2rem,8vw,3rem);line-height:1.15;margin:0;color:var(--turquoise);text-shadow:0 2px 0 rgba(0,0,0,.35)}
+  .hero p.sub{margin:.8rem 0 0;font-size:1.02rem;color:#BFD6D4;max-width:30rem}
+  main{padding:2.8rem 0 4rem}
+  section{margin:0 0 2.6rem}
+  h2{font-family:Lalezar,Vazirmatn,sans-serif;font-weight:400;font-size:1.55rem;margin:0 0 1rem;color:var(--accent)}
+  p{margin:0 0 1rem}
+  .card{background:var(--panel);border:1px solid var(--line);max-width:30rem;margin:0 auto;padding:1.6rem 1.5rem 1.8rem;text-align:center}
+  .cta{display:inline-flex;margin-top:1.1rem;background:var(--turquoise-deep);color:#F4FBFA;text-decoration:none;padding:.65rem 1.3rem;border-radius:.4rem;font-size:.95rem}
+  .cta:hover{background:var(--turquoise)}
+
+  label{display:block;font-size:.9rem;color:var(--fg-soft);margin:0 0 .3rem}
+  input[type="text"],textarea{
+    width:100%;padding:.65rem .8rem;margin:0 0 1rem;border:1px solid var(--line);border-radius:.4rem;
+    background:var(--panel);color:var(--fg);font-family:inherit;font-size:.97rem;
+  }
+  textarea{min-height:8rem;resize:vertical}
+  input:focus-visible,textarea:focus-visible{outline:3px solid var(--turquoise);outline-offset:1px}
+
+  .editor-card{background:var(--panel);border:1px solid var(--line);padding:1.3rem 1.3rem 1.5rem;margin-bottom:1.4rem}
+  .btn{appearance:none;border:0;border-radius:.4rem;padding:.6rem 1.15rem;font-family:inherit;font-size:.92rem;font-weight:600;cursor:pointer;margin:0 .4rem .4rem 0}
+  .btn-primary{background:var(--turquoise-deep);color:#F4FBFA}
+  .btn-primary:hover{background:var(--turquoise)}
+  .btn-outline{background:transparent;border:1px solid var(--line);color:var(--fg)}
+  .btn-outline:hover{border-color:var(--accent);color:var(--accent)}
+  .btn-danger{background:transparent;border:1px solid #C0524A;color:#C0524A}
+  .btn-danger:hover{background:rgba(192,82,74,.1)}
+  .btn:disabled{opacity:.55;cursor:default}
+
+  .play-item{background:var(--panel);border:1px solid var(--line);border-right:4px solid var(--accent);padding:1.1rem 1.2rem 1.2rem;margin-bottom:1.1rem}
+  .play-item h3{font-family:Lalezar,Vazirmatn,sans-serif;font-weight:400;font-size:1.3rem;margin:0 0 .3rem;color:var(--accent)}
+  .status-badge{display:inline-block;font-size:.76rem;padding:.2rem .6rem;border-radius:999px;margin-bottom:.6rem}
+  .status-draft{background:rgba(84,99,110,.15);color:var(--fg-soft)}
+  .status-pending{background:rgba(217,166,46,.15);color:var(--accent-2)}
+  .status-published{background:rgba(63,191,182,.15);color:var(--accent)}
+  .status-rejected{background:rgba(192,82,74,.12);color:#C0524A}
+  .author-line{font-size:.85rem;color:var(--fg-soft);margin-top:.4rem}
+
+  .alert{margin:0 0 1rem;padding:.6rem .85rem;border-radius:.4rem;font-size:.88rem;display:none}
+  .alert.is-visible{display:block}
+  .alert.is-error{background:rgba(192,82,74,.12);color:#C0524A;border:1px solid rgba(192,82,74,.35)}
+  .alert.is-success{background:rgba(63,191,182,.12);color:var(--accent);border:1px solid rgba(63,191,182,.35)}
+
+  .empty{border:1px dashed var(--line);padding:1.3rem;color:var(--fg-soft);font-size:.92rem;text-align:center}
+  .admin-section{border-top:2px dashed var(--ochre);padding-top:1.6rem;margin-top:2rem}
+
+  footer{border-top:1px solid var(--line);padding:1.6rem 0 calc(2.2rem + env(safe-area-inset-bottom,0px));color:var(--fg-soft);font-size:.88rem;text-align:center}
+  :focus-visible{outline:3px solid var(--turquoise);outline-offset:2px}
+  @media (prefers-reduced-motion: reduce){ .burger span,#menu,.backdrop{transition:none} }
+</style>
+</head>
+<body>
+
+<div class="topbar">
+  <div class="topbar-inner">
+    <a class="brand" href="index.html">
+      <span class="mark" aria-hidden="true"></span>
+      <span>کانون تئاتر نیشابور</span>
+    </a>
+    <button class="burger" id="burgerBtn" aria-expanded="false" aria-controls="menu" aria-label="باز کردن منو">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+  <nav id="menu" data-open="false">
+    <ul>
+      <li><a href="index.html">خانه</a></li>
+      <li><a href="plays.html">نمایشنامه‌ها</a></li>
+      <li><a href="my-plays.html" aria-current="page">نمایشنامه‌های شما</a></li>
+      <li class="menu-authed" id="chatMenuItem"><a href="chat.html">صحبت با کانون</a></li>
+      <li class="menu-authed" id="profileMenuItem"><a href="profile.html">پروفایل من</a></li>
+      <li class="menu-auth" id="authMenuItem"><a href="auth.html">ورود / ثبت‌نام</a></li>
+    </ul>
+  </nav>
+</div>
+<div class="backdrop" id="backdrop" data-open="false"></div>
+
+<header class="hero">
+  <div class="tile" aria-hidden="true"></div>
+  <div class="wrap">
+    <p class="eyebrow">نوشتن</p>
+    <h1>نمایشنامه‌های شما</h1>
+    <p class="sub">داستان یا نمایشنامه‌ات رو بنویس، وقتی آماده شد بفرست برای بررسی کانون.</p>
+  </div>
+</header>
+
+<main class="wrap">
+  <div id="loggedOutBox" class="card" style="display:none">
+    <p>برای نوشتن نمایشنامه، اول باید وارد شوی یا ثبت‌نام کنی.</p>
+    <a class="cta" href="auth.html">ورود / ثبت‌نام ←</a>
+  </div>
+
+  <div id="loggedInArea" style="display:none">
+    <div class="alert" id="alertBox"></div>
+
+    <section>
+      <h2>نمایشنامه‌ی جدید</h2>
+      <div class="editor-card">
+        <label for="newTitle">عنوان</label>
+        <input type="text" id="newTitle" maxlength="120">
+        <label for="newSummary">خلاصه‌ی کوتاه</label>
+        <input type="text" id="newSummary" maxlength="240">
+        <label for="newContent">متن نمایشنامه</label>
+        <textarea id="newContent"></textarea>
+        <button class="btn btn-primary" id="createBtn">ذخیره به‌عنوان پیش‌نویس</button>
+      </div>
+    </section>
+
+    <section>
+      <h2>نمایشنامه‌های من</h2>
+      <div id="myList">
+        <div class="empty">در حال بارگذاری…</div>
+      </div>
+    </section>
+
+    <section class="admin-section" id="adminSection" style="display:none">
+      <h2>در انتظار بررسی (ادمین)</h2>
+      <div id="pendingList"><div class="empty">در حال بارگذاری…</div></div>
+    </section>
+  </div>
+</main>
+
+<footer class="wrap"><p>کانون تئاتر دانشگاه نیشابور</p></footer>
+
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script>
+  (function(){
+    var btn = document.getElementById('burgerBtn');
+    var menu = document.getElementById('menu');
+    var backdrop = document.getElementById('backdrop');
+    function setOpen(open){
+      menu.setAttribute('data-open', String(open));
+      backdrop.setAttribute('data-open', String(open));
+      btn.setAttribute('aria-expanded', String(open));
+    }
+    btn.addEventListener('click', function(){ setOpen(menu.getAttribute('data-open') !== 'true'); });
+    backdrop.addEventListener('click', function(){ setOpen(false); });
+    document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ setOpen(false); } });
+  })();
+
+  (function(){
+    var SUPABASE_URL = "https://giskluyvwinuyqlgdfuw.supabase.co";
+    var SUPABASE_ANON_KEY = "sb_publishable_rInivX8hSrSzWNEeMiMbsw_cNEyJxrh";
+    var sb = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    window.sbClient = sb;
+
+    var authItem = document.getElementById('authMenuItem');
+    var chatItem = document.getElementById('chatMenuItem');
+    var profileItem = document.getElementById('profileMenuItem');
+    var loggedOutBox = document.getElementById('loggedOutBox');
+    var loggedInArea = document.getElementById('loggedInArea');
+    var alertBox = document.getElementById('alertBox');
+    var myList = document.getElementById('myList');
+    var adminSection = document.getElementById('adminSection');
+    var pendingList = document.getElementById('pendingList');
+    var createBtn = document.getElementById('createBtn');
+    var newTitle = document.getElementById('newTitle');
+    var newSummary = document.getElementById('newSummary');
+    var newContent = document.getElementById('newContent');
+
+    var myId = null;
+    var isAdmin = false;
+
+    var STATUS_LABEL = {
+      draft: ['پیش‌نویس', 'status-draft'],
+      pending: ['در انتظار بررسی', 'status-pending'],
+      published: ['منتشر شده ✅', 'status-published'],
+      rejected: ['رد شده', 'status-rejected']
+    };
+
+    function escapeHtml(str){
+      return String(str == null ? "" : str).replace(/[&<>"']/g, function(c){
+        return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
+      });
+    }
+    function showAlert(message, type){
+      alertBox.textContent = message;
+      alertBox.className = "alert is-visible " + (type === "error" ? "is-error" : "is-success");
+    }
+    function hideAlert(){ alertBox.className = "alert"; alertBox.textContent = ""; }
+
+    function renderAuthState(session){
+      if(session && session.user){
+        chatItem.style.display = "block";
+        profileItem.style.display = "block";
+        authItem.innerHTML = '<div class="menu-user">' + escapeHtml(session.user.email) + '</div><a href="#" id="logoutLink">خروج</a>';
+        document.getElementById('logoutLink').addEventListener('click', function(e){
+          e.preventDefault();
+          sb.auth.signOut().then(function(){ window.location.reload(); });
+        });
+      } else {
+        chatItem.style.display = "none";
+        profileItem.style.display = "none";
+        authItem.innerHTML = '<a href="auth.html">ورود / ثبت‌نام</a>';
+      }
+    }
+
+    function renderMyPlays(list){
+      myList.innerHTML = "";
+      if(!list || list.length === 0){
+        myList.innerHTML = '<div class="empty">هنوز چیزی ننوشته‌ای. از بالا شروع کن.</div>';
+        return;
+      }
+      list.forEach(function(p){
+        var st = STATUS_LABEL[p.status] || STATUS_LABEL.draft;
+        var el = document.createElement('div');
+        el.className = "play-item";
+        var editableHtml = "";
+
+        if(p.status === 'draft' || p.status === 'rejected'){
+          editableHtml =
+            '<label>عنوان</label><input type="text" class="f-title" value="' + escapeHtml(p.title || "") + '" maxlength="120">' +
+            '<label>خلاصه</label><input type="text" class="f-summary" value="' + escapeHtml(p.summary || "") + '" maxlength="240">' +
+            '<label>متن</label><textarea class="f-content">' + escapeHtml(p.content || "") + '</textarea>' +
+            '<button class="btn btn-outline f-save" data-id="' + p.id + '">ذخیره تغییرات</button>' +
+            '<button class="btn btn-primary f-submit" data-id="' + p.id + '">ارسال برای بررسی</button>' +
+            '<button class="btn btn-danger f-delete" data-id="' + p.id + '">حذف</button>';
+        } else if(p.status === 'pending'){
+          editableHtml =
+            '<p>' + escapeHtml(p.summary || "") + '</p>' +
+            '<p style="color:var(--fg-soft);font-size:.88rem">این نمایشنامه در انتظار بررسی ادمینه و فعلاً قابل ویرایش نیست.</p>';
+        } else if(p.status === 'published'){
+          editableHtml =
+            '<p>' + escapeHtml(p.summary || "") + '</p>' +
+            '<p class="author-line">این نمایشنامه الان روی <a href="plays.html">صفحه‌ی نمایشنامه‌ها</a> قابل مشاهده‌ست.</p>';
+        }
+
+        el.innerHTML =
+          '<span class="status-badge ' + st[1] + '">' + st[0] + '</span>' +
+          '<h3>' + escapeHtml(p.title || "بدون عنوان") + '</h3>' +
+          editableHtml;
+        myList.appendChild(el);
+      });
+
+      myList.querySelectorAll('.f-save').forEach(function(b){
+        b.addEventListener('click', function(){ saveEdit(b.getAttribute('data-id'), b.closest('.play-item'), 'draft'); });
+      });
+      myList.querySelectorAll('.f-submit').forEach(function(b){
+        b.addEventListener('click', function(){ saveEdit(b.getAttribute('data-id'), b.closest('.play-item'), 'pending'); });
+      });
+      myList.querySelectorAll('.f-delete').forEach(function(b){
+        b.addEventListener('click', function(){
+          if(!window.confirm('این پیش‌نویس حذف شود؟')) return;
+          sb.from('plays').delete().eq('id', b.getAttribute('data-id')).then(function(res){
+            if(res.error){ showAlert("حذف نشد: " + res.error.message, "error"); return; }
+            loadMyPlays();
+          });
+        });
+      });
+    }
+
+    function saveEdit(id, itemEl, newStatus){
+      hideAlert();
+      var title = itemEl.querySelector('.f-title').value.trim();
+      var summary = itemEl.querySelector('.f-summary').value.trim();
+      var content = itemEl.querySelector('.f-content').value;
+      if(!title){ showAlert("عنوان نمی‌تونه خالی باشه.", "error"); return; }
+      if(newStatus === 'pending' && !content.trim()){ showAlert("قبل از ارسال، متن نمایشنامه رو بنویس.", "error"); return; }
+
+      sb.from('plays').update({ title: title, summary: summary, content: content, status: newStatus })
+        .eq('id', id)
+        .then(function(res){
+          if(res.error){ showAlert("ذخیره نشد: " + res.error.message, "error"); return; }
+          showAlert(newStatus === 'pending' ? "برای بررسی ادمین فرستاده شد." : "ذخیره شد.", "success");
+          loadMyPlays();
+        });
+    }
+
+    function loadMyPlays(){
+      sb.from('plays')
+        .select('id,title,summary,content,status,created_at')
+        .eq('author_id', myId)
+        .order('created_at', { ascending: false })
+        .then(function(res){
+          if(res.error){ myList.innerHTML = '<div class="empty">لود نشد.</div>'; return; }
+          renderMyPlays(res.data);
+        });
+    }
+
+    function renderPending(list){
+      pendingList.innerHTML = "";
+      if(!list || list.length === 0){
+        pendingList.innerHTML = '<div class="empty">چیزی در انتظار بررسی نیست.</div>';
+        return;
+      }
+      list.forEach(function(p){
+        var name = (p.profiles && p.profiles.display_name) ? p.profiles.display_name : "کاربر بدون‌نام";
+        var el = document.createElement('div');
+        el.className = "play-item";
+        el.innerHTML =
+          '<h3>' + escapeHtml(p.title || "بدون عنوان") + '</h3>' +
+          '<p class="author-line">فرستنده: ' + escapeHtml(name) + '</p>' +
+          '<p>' + escapeHtml(p.summary || "") + '</p>' +
+          '<details><summary style="cursor:pointer;color:var(--accent);font-size:.9rem">دیدن متن کامل</summary>' +
+          '<p style="white-space:pre-wrap;margin-top:.6rem">' + escapeHtml(p.content || "") + '</p></details>' +
+          '<button class="btn btn-primary f-approve" data-id="' + p.id + '">تأیید و انتشار</button>' +
+          '<button class="btn btn-danger f-reject" data-id="' + p.id + '">رد کردن</button>';
+        pendingList.appendChild(el);
+      });
+
+      pendingList.querySelectorAll('.f-approve').forEach(function(b){
+        b.addEventListener('click', function(){
+          sb.from('plays').update({ status: 'published' }).eq('id', b.getAttribute('data-id')).then(function(res){
+            if(res.error){ showAlert("انجام نشد: " + res.error.message, "error"); return; }
+            loadPending();
+          });
+        });
+      });
+      pendingList.querySelectorAll('.f-reject').forEach(function(b){
+        b.addEventListener('click', function(){
+          sb.from('plays').update({ status: 'rejected' }).eq('id', b.getAttribute('data-id')).then(function(res){
+            if(res.error){ showAlert("انجام نشد: " + res.error.message, "error"); return; }
+            loadPending();
+          });
+        });
+      });
+    }
+
+    function loadPending(){
+      sb.from('plays')
+        .select('id,title,summary,content,author_id,profiles(display_name)')
+        .eq('status', 'pending')
+        .order('created_at', { ascending: true })
+        .then(function(res){
+          if(res.error){ pendingList.innerHTML = '<div class="empty">لود نشد.</div>'; return; }
+          renderPending(res.data);
+        });
+    }
+
+    sb.auth.getSession().then(function(res){
+      var session = res.data.session;
+      renderAuthState(session);
+      if(!session){
+        loggedOutBox.style.display = "block";
+        loggedInArea.style.display = "none";
+        return;
+      }
+      myId = session.user.id;
+      loggedOutBox.style.display = "none";
+      loggedInArea.style.display = "block";
+      loadMyPlays();
+
+      sb.from('profiles').select('role').eq('id', myId).single().then(function(res2){
+        isAdmin = !res2.error && res2.data && res2.data.role === 'admin';
+        if(isAdmin){
+          adminSection.style.display = "block";
+          loadPending();
+        }
+      });
+    });
+
+    createBtn.addEventListener('click', function(){
+      hideAlert();
+      var title = newTitle.value.trim();
+      var summary = newSummary.value.trim();
+      var content = newContent.value;
+      if(!title){ showAlert("عنوان رو بنویس.", "error"); return; }
+      createBtn.disabled = true;
+      sb.from('plays').insert({ author_id: myId, title: title, summary: summary, content: content, status: 'draft' })
+        .then(function(res){
+          if(res.error){ showAlert("ذخیره نشد: " + res.error.message, "error"); return; }
+          newTitle.value = ""; newSummary.value = ""; newContent.value = "";
+          showAlert("به‌عنوان پیش‌نویس ذخیره شد.", "success");
+          loadMyPlays();
+        })
+        .finally(function(){ createBtn.disabled = false; });
+    });
+  })();
+</script>
+</body>
+</html>
