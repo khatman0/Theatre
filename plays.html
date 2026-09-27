@@ -341,10 +341,9 @@
     sb.auth.onAuthStateChange(function(_event, session){ renderAuthState(session); });
   })();
 
-  /* ---------- بارگذاری نمایشنامه‌ها از Supabase ----------
-     پیش از استفاده، سه مقدار زیر را با اطلاعات پروژه‌ی خودتان پر کنید.
-     SUPABASE_URL و SUPABASE_ANON_KEY را از Project Settings → API بردارید
-     (کلید anon/public را بگذارید، نه service_role را).
+  /* ---------- بارگذاری نمایشنامه‌های منتشرشده از Supabase ----------
+     منطق یکسان با myplays.html: فقط نمایشنامه‌هایی که status = 'published' هستند.
+     ترتیب: جدیدترین اول (created_at.desc).
   */
   (function(){
     var SUPABASE_URL = "https://giskluyvwinuyqlgdfuw.supabase.co";
@@ -394,13 +393,15 @@
       });
     }
 
-    function showError(){
+    function showError(msg){
       stateEl.className = "state-msg is-error";
-      stateEl.innerHTML = "<span>نمایشنامه‌ها لود نشدن. لطفاً بعداً دوباره امتحان کنید.</span>";
+      stateEl.innerHTML = "<span>نمایشنامه‌ها لود نشدن" +
+        (msg ? " (" + escapeHtml(msg) + ")" : "") +
+        ". لطفاً بعداً دوباره امتحان کنید.</span>";
     }
 
     var endpoint = SUPABASE_URL + "/rest/v1/" + TABLE_NAME +
-      "?select=*&published=eq.true&order=sort_order.asc";
+      "?select=*&status=eq.published&order=created_at.desc";
 
     fetch(endpoint, {
       headers: {
@@ -409,11 +410,13 @@
       }
     })
       .then(function(res){
-        if(!res.ok) throw new Error("bad response");
+        if(!res.ok){
+          return res.text().then(function(t){ throw new Error(t || ("HTTP " + res.status)); });
+        }
         return res.json();
       })
       .then(renderPlays)
-      .catch(showError);
+      .catch(function(err){ showError(err.message); });
   })();
 </script>
 </body>
