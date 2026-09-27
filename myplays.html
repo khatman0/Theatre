@@ -184,6 +184,7 @@
 
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 <script>
+  /* ---------- منوی همبرگری ---------- */
   (function(){
     var btn = document.getElementById('burgerBtn');
     var menu = document.getElementById('menu');
@@ -198,6 +199,7 @@
     document.addEventListener('keydown', function(e){ if(e.key === 'Escape'){ setOpen(false); } });
   })();
 
+  /* ---------- منطق اصلی ---------- */
   (function(){
     var SUPABASE_URL = "https://giskluyvwinuyqlgdfuw.supabase.co";
     var SUPABASE_ANON_KEY = "sb_publishable_rInivX8hSrSzWNEeMiMbsw_cNEyJxrh";
@@ -228,6 +230,7 @@
       rejected: ['رد شده', 'status-rejected']
     };
 
+    /* ---------- کمکی‌ها ---------- */
     function escapeHtml(str){
       return String(str == null ? "" : str).replace(/[&<>"']/g, function(c){
         return ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c];
@@ -239,6 +242,7 @@
     }
     function hideAlert(){ alertBox.className = "alert"; alertBox.textContent = ""; }
 
+    /* ---------- وضعیت ورود ---------- */
     function renderAuthState(session){
       if(session && session.user){
         chatItem.style.display = "block";
@@ -255,6 +259,7 @@
       }
     }
 
+    /* ---------- رندر لیست نویسنده ---------- */
     function renderMyPlays(list){
       myList.innerHTML = "";
       if(!list || list.length === 0){
@@ -309,6 +314,37 @@
       });
     }
 
+    /* ---------- رندر لیست ادمین ---------- */
+    function renderPending(list){
+      pendingList.innerHTML = "";
+      if(!list || list.length === 0){
+        pendingList.innerHTML = '<div class="empty">چیزی برای بررسی نیست.</div>';
+        return;
+      }
+      list.forEach(function(p){
+        var el = document.createElement('div');
+        el.className = "play-item";
+        el.innerHTML =
+          '<span class="status-badge status-pending">در انتظار بررسی</span>' +
+          '<h3>' + escapeHtml(p.title || "بدون عنوان") + '</h3>' +
+          '<p>' + escapeHtml(p.summary || "") + '</p>' +
+          '<details style="margin:.6rem 0"><summary style="cursor:pointer;color:var(--accent)">دیدن متن کامل</summary>' +
+          '<pre style="white-space:pre-wrap;font-family:inherit;background:var(--bg);border:1px solid var(--line);padding:.8rem;border-radius:.4rem;margin-top:.6rem">' +
+          escapeHtml(p.content || "") + '</pre></details>' +
+          '<button class="btn btn-primary p-approve" data-id="' + p.id + '">تأیید و انتشار</button>' +
+          '<button class="btn btn-danger p-reject" data-id="' + p.id + '">رد کردن</button>';
+        pendingList.appendChild(el);
+      });
+
+      pendingList.querySelectorAll('.p-approve').forEach(function(b){
+        b.addEventListener('click', function(){ approvePlay(b.getAttribute('data-id')); });
+      });
+      pendingList.querySelectorAll('.p-reject').forEach(function(b){
+        b.addEventListener('click', function(){ rejectPlay(b.getAttribute('data-id')); });
+      });
+    }
+
+    /* ---------- ذخیره/ارسال ---------- */
     function saveEdit(id, itemEl, newStatus){
       hideAlert();
       var title = itemEl.querySelector('.f-title').value.trim();
@@ -326,67 +362,82 @@
         });
     }
 
+    /* ---------- تأیید / رد توسط ادمین ---------- */
+    function approvePlay(id){
+      hideAlert();
+      sb.from('plays').update({ status: 'published' }).eq('id', id).then(function(res){
+        if(res.error){ showAlert("تأیید نشد: " + res.error.message, "error"); return; }
+        showAlert("نمایشنامه منتشر شد.", "success");
+        loadPending();
+      });
+    }
+    function rejectPlay(id){
+      hideAlert();
+      if(!window.confirm('این نمایشنامه رد شود؟')) return;
+      sb.from('plays').update({ status: 'rejected' }).eq('id', id).then(function(res){
+        if(res.error){ showAlert("رد نشد: " + res.error.message, "error"); return; }
+        showAlert("نمایشنامه رد شد.", "success");
+        loadPending();
+      });
+    }
+
+    /* ---------- بارگذاری‌ها ---------- */
     function loadMyPlays(){
       sb.from('plays')
         .select('id,title,summary,content,status,created_at')
         .eq('author_id', myId)
         .order('created_at', { ascending: false })
         .then(function(res){
-          if(res.error){ myList.innerHTML = '<div class="empty">لود نشد.</div>'; return; }
+          if(res.error){
+            myList.innerHTML = '<div class="empty">لود نشد: ' + escapeHtml(res.error.message) + '</div>';
+            return;
+          }
           renderMyPlays(res.data);
         });
     }
 
-    function renderPending(list){
-      pendingList.innerHTML = "";
-      if(!list || list.length === 0){
-        pendingList.innerHTML = '<div class="empty">چیزی در انتظار بررسی نیست.</div>';
-        return;
-      }
-      list.forEach(function(p){
-        var name = (p.profiles && p.profiles.display_name) ? p.profiles.display_name : "کاربر بدون‌نام";
-        var el = document.createElement('div');
-        el.className = "play-item";
-        el.innerHTML =
-          '<h3>' + escapeHtml(p.title || "بدون عنوان") + '</h3>' +
-          '<p class="author-line">فرستنده: ' + escapeHtml(name) + '</p>' +
-          '<p>' + escapeHtml(p.summary || "") + '</p>' +
-          '<details><summary style="cursor:pointer;color:var(--accent);font-size:.9rem">دیدن متن کامل</summary>' +
-          '<p style="white-space:pre-wrap;margin-top:.6rem">' + escapeHtml(p.content || "") + '</p></details>' +
-          '<button class="btn btn-primary f-approve" data-id="' + p.id + '">تأیید و انتشار</button>' +
-          '<button class="btn btn-danger f-reject" data-id="' + p.id + '">رد کردن</button>';
-        pendingList.appendChild(el);
-      });
-
-      pendingList.querySelectorAll('.f-approve').forEach(function(b){
-        b.addEventListener('click', function(){
-          sb.from('plays').update({ status: 'published' }).eq('id', b.getAttribute('data-id')).then(function(res){
-            if(res.error){ showAlert("انجام نشد: " + res.error.message, "error"); return; }
-            loadPending();
-          });
-        });
-      });
-      pendingList.querySelectorAll('.f-reject').forEach(function(b){
-        b.addEventListener('click', function(){
-          sb.from('plays').update({ status: 'rejected' }).eq('id', b.getAttribute('data-id')).then(function(res){
-            if(res.error){ showAlert("انجام نشد: " + res.error.message, "error"); return; }
-            loadPending();
-          });
-        });
-      });
-    }
-
     function loadPending(){
       sb.from('plays')
-        .select('id,title,summary,content,author_id,profiles(display_name)')
+        .select('id,title,summary,content,status,created_at,author_id')
         .eq('status', 'pending')
         .order('created_at', { ascending: true })
         .then(function(res){
-          if(res.error){ pendingList.innerHTML = '<div class="empty">لود نشد.</div>'; return; }
+          if(res.error){
+            pendingList.innerHTML = '<div class="empty">لود نشد: ' + escapeHtml(res.error.message) + '</div>';
+            return;
+          }
           renderPending(res.data);
         });
     }
 
+    /* ---------- ساخت نمایشنامه‌ی جدید ---------- */
+    createBtn.addEventListener('click', function(){
+      hideAlert();
+      var title = newTitle.value.trim();
+      var summary = newSummary.value.trim();
+      var content = newContent.value;
+      if(!title){ showAlert("عنوان نمی‌تونه خالی باشه.", "error"); return; }
+
+      createBtn.disabled = true;
+      createBtn.textContent = "در حال ذخیره…";
+      sb.from('plays').insert({
+        title: title,
+        summary: summary,
+        content: content,
+        status: 'draft',
+        author_id: myId
+      }).then(function(res){
+        if(res.error){ showAlert("ذخیره نشد: " + res.error.message, "error"); return; }
+        newTitle.value = ""; newSummary.value = ""; newContent.value = "";
+        showAlert("پیش‌نویس ذخیره شد.", "success");
+        loadMyPlays();
+      }).finally(function(){
+        createBtn.disabled = false;
+        createBtn.textContent = "ذخیره به‌عنوان پیش‌نویس";
+      });
+    });
+
+    /* ---------- راه‌اندازی ---------- */
     sb.auth.getSession().then(function(res){
       var session = res.data.session;
       renderAuthState(session);
@@ -398,32 +449,13 @@
       myId = session.user.id;
       loggedOutBox.style.display = "none";
       loggedInArea.style.display = "block";
-      loadMyPlays();
 
       sb.from('profiles').select('role').eq('id', myId).single().then(function(res2){
         isAdmin = !res2.error && res2.data && res2.data.role === 'admin';
-        if(isAdmin){
-          adminSection.style.display = "block";
-          loadPending();
-        }
+        if(isAdmin){ adminSection.style.display = "block"; }
+        loadMyPlays();
+        if(isAdmin){ loadPending(); }
       });
-    });
-
-    createBtn.addEventListener('click', function(){
-      hideAlert();
-      var title = newTitle.value.trim();
-      var summary = newSummary.value.trim();
-      var content = newContent.value;
-      if(!title){ showAlert("عنوان رو بنویس.", "error"); return; }
-      createBtn.disabled = true;
-      sb.from('plays').insert({ author_id: myId, title: title, summary: summary, content: content, status: 'draft' })
-        .then(function(res){
-          if(res.error){ showAlert("ذخیره نشد: " + res.error.message, "error"); return; }
-          newTitle.value = ""; newSummary.value = ""; newContent.value = "";
-          showAlert("به‌عنوان پیش‌نویس ذخیره شد.", "success");
-          loadMyPlays();
-        })
-        .finally(function(){ createBtn.disabled = false; });
     });
   })();
 </script>
